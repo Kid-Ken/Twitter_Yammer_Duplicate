@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Twitter_Yammer_Duplicate</string>
+    <string name="login_message">Login Successful</string>
+</resources>
