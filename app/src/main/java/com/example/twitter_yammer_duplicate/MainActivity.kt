@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import models.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,17 +20,17 @@ class MainActivity : AppCompatActivity() {
             val username = editTextTextEmailAddress.text.toString().trim()
             val password = editTextTextPassword.text.toString().trim()
 
-            RetroFitClient.instance.serverLogin( username, password )
-                .enqueue(object : Callback<TokenModel>{
-                    override fun onFailure(call: Call<TokenModel>, t: Throwable) {
+            RetroFitClient.instance.createUser( username, password, username, password)
+                .enqueue(object : Callback<UserInformationModel>{
+                    override fun onFailure(call: Call<UserInformationModel>, t: Throwable) {
                         Toast.makeText(applicationContext,t.message,Toast.LENGTH_LONG).show()
                     }
 
                     override fun onResponse(
-                        call: Call<TokenModel>,
-                        response: Response<TokenModel>
+                        call: Call<UserInformationModel>,
+                        response: Response<UserInformationModel>
                     ) {
-                        Toast.makeText(applicationContext, response.body()?.token,Toast.LENGTH_LONG).show()
+                        Toast.makeText(applicationContext, "Successfully created user" + response.body()?.firstname,Toast.LENGTH_LONG).show()
                     }
 
 

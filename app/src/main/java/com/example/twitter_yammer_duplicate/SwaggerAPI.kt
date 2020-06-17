@@ -1,5 +1,7 @@
 package com.example.twitter_yammer_duplicate
 
+import models.TokenModel
+import models.UserInformationModel
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -69,3 +71,5 @@ interface SwaggerAPI {
 
     }
 }
+
+//TODO: FINISH MAKING API CALLS
