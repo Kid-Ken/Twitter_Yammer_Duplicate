@@ -1,5 +1,6 @@
 package com.example.twitter_yammer_duplicate
 
+import models.SpecificUserModel
 import models.TokenModel
 import models.UserInformationModel
 import retrofit2.Call
@@ -8,68 +9,69 @@ import retrofit2.http.*
 interface SwaggerAPI {
 
     @FormUrlEncoded
-    @POST("serverLogin")
+    @POST("/account/login")
     fun serverLogin(
         @Field("username") username:String,
         @Field("password") password:String
     ):Call<TokenModel>
 
     @FormUrlEncoded
-    @POST("createUser")
+    @POST("/account/create")
     fun createUser(
         @Field("username") username: String,
         @Field("password") password: String,
         @Field("firstname") firstname: String,
         @Field("lastname") lastname: String
-    ):Call<UserInformationModel>
+    ):Call<TokenModel>
 
-    @PUT("accountLogout")
-    fun accountLogout(){
+    @PUT("/account/logout")
+    fun accountLogout(
 
-    }
+    ):Call<TokenModel>
 
-    @GET("getUser")
-    fun getUser(){
+    @GET("/user/")
+    fun getUser(
 
-    }
+    ):Call<SpecificUserModel>
+
 
     @FormUrlEncoded
-    @POST("userPicture")
+    @POST("/user/picture")
     fun userPicture(){
 
     }
 
-    @GET("getUserUsername")
-    fun getUserUsername(){
+    @GET("/user/{username}")
+    fun getUserUsername(
+        @Field("username") username: String
 
-    }
+    ):Call<SpecificUserModel>
 
-    @GET("getFeed")
+
+    @GET("/feed/")
     fun accountLgetFeedogout(){
 
     }
 
     @FormUrlEncoded
-    @POST("createPost")
+    @POST("/feed/post/")
     fun createPost(){
 
     }
 
-    @PUT("updatePost")
+    @PUT("/feed/post")
     fun updatePost(){
 
     }
 
     @FormUrlEncoded
-    @POST("createComment")
+    @POST("/feed/:postId/comment")
     fun createComment(){
 
     }
 
-    @PUT("updateComment")
+    @PUT("/feed/:postId/comment")
     fun updateComment(){
 
     }
 }
-
-//TODO: FINISH MAKING API CALLS
