@@ -1,5 +1,6 @@
 package activities
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -20,15 +21,16 @@ class Main_Screen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main__screen)
 
+
         logout_Button.setOnClickListener {
-           RetroFitClient.instance.accountLogout()
-            val intent = Intent(this@Main_Screen,Login_Page::class.java)
+            RetroFitClient.instance.accountLogout()
+            val intent = Intent(this@Main_Screen, Login_Page::class.java)
             startActivity(intent)
         }
 
         profile_Button.setOnClickListener {
             RetroFitClient.instance.getUser()
-                .enqueue(object : Callback<SpecificUserModel>{
+                .enqueue(object : Callback<SpecificUserModel> {
                     override fun onFailure(call: Call<SpecificUserModel>, t: Throwable) {
                         TODO("Not yet implemented")
                     }
@@ -41,8 +43,7 @@ class Main_Screen : AppCompatActivity() {
                         globalInformation.profilePic = (response.body()?.profilePic).toString()
                         globalInformation.firstName = (response.body()?.firstName).toString()
                         globalInformation.lastName = (response.body()?.lastName).toString()
-                        val intent = Intent(this@Main_Screen, Profile_Screen::class.java)
-                        startActivity(intent)
+                       startActivity(Profile_Screen.newIntent(this@Main_Screen))
                     }
 
                 })
@@ -50,34 +51,48 @@ class Main_Screen : AppCompatActivity() {
 
         }
 
-        searchbar.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(p0: String): Boolean {
-                RetroFitClient.instance.getUserUsername(p0)
-                    .enqueue(object : Callback<SpecificUserModel>{
-                        override fun onFailure(call: Call<SpecificUserModel>, t: Throwable) {
-                            TODO("Not yet implemented")
-                        }
+        create_tweet_button.setOnClickListener {
+            startActivity(Create_Tweet.newIntent(this, globalInformation.username, globalInformation.firstName))
+        }
+    }
 
-                        override fun onResponse(
-                            call: Call<SpecificUserModel>,
-                            response: Response<SpecificUserModel>
-                        ) {
-                            val intent = Intent(this@Main_Screen,Profile_Screen::class.java)
-                            startActivity(intent)
-                        }
 
-                    })
-                return false
+    //He's basically starting himself up
+
+
+    // companion object{
+    //   fun newIntent(context: Context) = Intent(context, Main_Screen::class.java)
+    //}
+
+}
+
+/*
+searchbar.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+    override fun onQueryTextSubmit(p0: String): Boolean {
+        RetroFitClient.instance.getUserUsername(p0)
+            .enqueue(object : Callback<SpecificUserModel>{
+                override fun onFailure(call: Call<SpecificUserModel>, t: Throwable) {
+                    TODO("Not yet implemented")
                 }
 
-            override fun onQueryTextChange(p0: String?): Boolean {
-                TODO("Not yet implemented")
-                return false
+                override fun onResponse(
+                    call: Call<SpecificUserModel>,
+                    response: Response<SpecificUserModel>
+                ) {
+                    val intent = Intent(this@Main_Screen,Profile_Screen::class.java)
+                    startActivity(intent)
+                }
 
-            }
+            })
+        return false
+        }
 
-
-        })
+    override fun onQueryTextChange(p0: String?): Boolean {
+        TODO("Not yet implemented")
+        return false
 
     }
-}
+*/
+
+
+

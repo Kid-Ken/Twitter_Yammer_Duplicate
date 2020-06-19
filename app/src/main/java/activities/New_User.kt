@@ -1,5 +1,6 @@
 package activities
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -20,7 +21,7 @@ class New_User : AppCompatActivity() {
         setContentView(R.layout.activity_new__user)
 
         cancelButton.setOnClickListener {
-            val intent = Intent(this@New_User,Login_Page::class.java)
+            val intent = Intent(this@New_User, Login_Page::class.java)
             startActivity(intent)
         }
 
@@ -31,12 +32,13 @@ class New_User : AppCompatActivity() {
             val lastname = lastname.text.toString().trim()
             var tokenStuff = globalInformation()
 
-            val intent = Intent(this,Main_Screen::class.java)
+            val intent = Intent(this, Main_Screen::class.java)
 
-            RetroFitClient.instance.createUser( username, password, firstname, lastname)
-                .enqueue(object : Callback<TokenModel>{
+            RetroFitClient.instance.createUser(username, password, firstname, lastname)
+                .enqueue(object : Callback<TokenModel> {
                     override fun onFailure(call: Call<TokenModel>, t: Throwable) {
-                        Toast.makeText(applicationContext,t.localizedMessage,Toast.LENGTH_LONG).show()
+                        Toast.makeText(applicationContext, t.localizedMessage, Toast.LENGTH_LONG)
+                            .show()
                     }
 
                     override fun onResponse(
@@ -44,7 +46,11 @@ class New_User : AppCompatActivity() {
                         response: Response<TokenModel>
                     ) {
 
-                        Toast.makeText(applicationContext, "Successfully logged in" + response.body()?.token,Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            applicationContext,
+                            "Successfully logged in" + response.body()?.token,
+                            Toast.LENGTH_LONG
+                        ).show()
                         globalInformation.token_Authorization = (response.body()?.token).toString()
                         globalInformation.username = username
                         globalInformation.firstName = firstname
@@ -60,5 +66,11 @@ class New_User : AppCompatActivity() {
         }
 
 
-        }
     }
+
+
+    companion object {
+        fun newIntent(context: Context) = Intent(context, New_User::class.java)
+    }
+
+}

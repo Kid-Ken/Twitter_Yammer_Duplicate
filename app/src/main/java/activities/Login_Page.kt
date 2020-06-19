@@ -29,7 +29,7 @@ class Login_Page : AppCompatActivity() {
             val password = editTextTextPassword.text.toString().trim()
 
 
-            RetroFitClient.instance.serverLogin( username, password)
+            RetroFitClient.instance.serverLogin(username, password)
                 .enqueue(object : Callback<TokenModel>{
                     override fun onFailure(call: Call<TokenModel>, t: Throwable) {
                         Toast.makeText(applicationContext,t.localizedMessage,Toast.LENGTH_LONG).show()
@@ -59,52 +59,4 @@ class Login_Page : AppCompatActivity() {
 
         }
     }
-
-    override fun onStart() {
-        super.onStart()
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-    }
-
-    override fun onResume() {
-        super.onResume()
-    }
-
-    override fun onPause() {
-        super.onPause()
-    }
-
-    override fun onStop() {
-        super.onStop()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
-
-
-
-
-
-
-    fun IsEmailValid(email: String):Boolean {
-        TODO("Add in the proper way to validate the email.")
-        return false
-    }
-
-
-    fun isPasswordValid(password: String ): Boolean{
-        return password.length > 5
-    }
-
-
-    fun login(){
-    }
-
-
-
-
 }
